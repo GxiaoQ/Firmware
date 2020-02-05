@@ -1528,7 +1528,8 @@ Mavlink::update_rate_mult()
 	} else if (_radio_status_available) {
 
 		// check for RADIO_STATUS timeout and reset
-		if (hrt_elapsed_time(&_rstatus.timestamp) > 5_s) {
+		if (hrt_elapsed_time(&_rstatus.timestamp) > (_param_mav_radio_timeout.get() *
+				1_s)) {
 			PX4_ERR("instance %d: RADIO_STATUS timeout", _instance_id);
 
 			_radio_status_available = false;
